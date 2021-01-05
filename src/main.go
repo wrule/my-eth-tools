@@ -1,19 +1,17 @@
 package main
 
 import (
+	"encoding/hex"
 	"fmt"
 
-	ecies "github.com/wrule/go-1"
+	ethCrypto "github.com/ethereum/go-ethereum/crypto"
 )
 
 func main() {
-	priKey, err := ecies.NewPrivateKeyFromHex("f8f8a2f43c8376ccb0871305060d7b27b0554d2cc72bccf41b2705608452f315")
+	bytes, err := hex.DecodeString("6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e2b0c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0")
 	if err != nil {
-		panic("私钥生成失败")
+		panic("")
 	}
-	fmt.Println(priKey.Hex())
-	fmt.Println(priKey.PublicKey.Hex(false))
+	rst := ethCrypto.Keccak256Hash(bytes)
+	fmt.Println(rst)
 }
-
-// 6e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e2b0c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0
-// 046e145ccef1033dea239875dd00dfb4fee6e3348b84985c92f103444683bae07b83b5c38e5e2b0c8529d7fa3f64d46daa1ece2d9ac14cab9477d042c84c32ccd0
