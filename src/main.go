@@ -10,6 +10,11 @@ import (
 )
 
 func main() {
+
+	// byte256 := GetRand256()
+	// fmt.Println(hex.EncodeToString(byte256))
+
+	// return
 	for {
 		priKeyHash := NewPriKey().Hex()
 		// 创建私钥对象
@@ -29,7 +34,7 @@ func main() {
 		addr := crypto.PubkeyToAddress(*pubKey)
 		addrHex := addr.Hex()
 		fmt.Printf("地址为: %s\n", addrHex)
-		if strings.HasPrefix(addrHex, "0x0000") {
+		if strings.HasPrefix(addrHex, "0x123") {
 			break
 		}
 	}

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 )
 
 // PriKey 私钥
@@ -24,18 +23,7 @@ func (me PriKey) Hex() string {
 
 // NewPriKey 构造函数
 func NewPriKey() PriKey {
-	const size = 32
-	file, err := os.Open("/dev/random")
-	if err != nil {
-		panic("随机文件打开出错")
-	}
-	buf := make([]byte, size)
-	n, err := file.ReadAt(buf, size)
-	if err != nil || n != size {
-		panic(err)
-	}
-	file.Close()
-	rst := [size]byte{}
-	copy(rst[:], buf)
+	rst := [32]byte{}
+	copy(rst[:], GetRand256())
 	return PriKey(rst)
 }
