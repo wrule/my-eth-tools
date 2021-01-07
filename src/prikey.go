@@ -32,7 +32,7 @@ func NewPriKey() PriKey {
 	buf := make([]byte, size)
 	n, err := file.ReadAt(buf, size)
 	if err != nil || n != size {
-		panic("随机文件读取出错")
+		panic(err)
 	}
 	file.Close()
 	rst := [size]byte{}
