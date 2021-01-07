@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/ecdsa"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"strings"
@@ -10,6 +11,14 @@ import (
 )
 
 func main() {
+
+	text := ReadWordListZh()
+	fmt.Println(len(text))
+
+	h := sha256.New()
+	h.Write([]byte("hello world"))
+	fmt.Printf("%x\n", h.Sum(nil))
+	return
 
 	// byte256 := GetRand256()
 	// fmt.Println(hex.EncodeToString(byte256))
