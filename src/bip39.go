@@ -49,3 +49,33 @@ func BIP39AddCheckInfo(bytes []byte) []int {
 	bits = append(bits, hashBits[:checkLen]...)
 	return bits
 }
+
+// BIP39GetWords s
+func BIP39GetWords(bytes []byte) []string {
+	bits := BIP39AddCheckInfo(bytes)
+	segNum := len(bits) / 11
+	modNum := len(bits) % 11
+	if modNum != 0 {
+		panic("位数不是11的倍数")
+	}
+	rst := []string{}
+	words := ReadWordListEn()
+	for i := 0; i < segNum; i++ {
+		start := i * 11
+		bitSeg := bits[start : start+11]
+		num := 0
+		num += bitSeg[0] * 1024
+		num += bitSeg[1] * 512
+		num += bitSeg[2] * 256
+		num += bitSeg[3] * 128
+		num += bitSeg[4] * 64
+		num += bitSeg[5] * 32
+		num += bitSeg[6] * 16
+		num += bitSeg[7] * 8
+		num += bitSeg[8] * 4
+		num += bitSeg[9] * 2
+		num += bitSeg[10] * 1
+		rst = append(rst, words[num])
+	}
+	return rst
+}

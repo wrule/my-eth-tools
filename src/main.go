@@ -10,10 +10,13 @@ import (
 )
 
 func main() {
-	bytes128 := GetRand256()
+	bytes128, err := hex.DecodeString("0c1e24e5917779d297e14d45f14e1a1a")
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println(hex.EncodeToString(bytes128))
-	bits := BIP39AddCheckInfo(bytes128)
-	fmt.Println(bits)
+	words := BIP39GetWords(bytes128)
+	fmt.Println(words, len(words))
 	return
 	for {
 		priKeyHash := NewPriKey().Hex()
