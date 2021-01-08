@@ -11,9 +11,16 @@ import (
 )
 
 func main() {
+	bytes128 := GetRand128()
+	fmt.Println(hex.EncodeToString(bytes128))
+	bits := BytesToBits(bytes128)
+	fmt.Println(bits)
+	fmt.Println(len(bits))
+	newBytes128 := BitsToBytes(bits)
+	fmt.Println(hex.EncodeToString(newBytes128))
 
-	text := ReadWordListZh()
-	fmt.Println(len(text))
+	// text := ReadWordListZh()
+	// fmt.Println(len(text))
 
 	h := sha256.New()
 	h.Write([]byte("hello world"))
