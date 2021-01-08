@@ -3,10 +3,10 @@ package main
 import (
 	"crypto/sha256"
 	"crypto/sha512"
-	"encoding/hex"
-	"fmt"
 	"io/ioutil"
 	"strings"
+
+	"golang.org/x/crypto/pbkdf2"
 )
 
 // ReadWordList 读取助记词词典列表
@@ -45,7 +45,6 @@ func BIP39AddCheckInfo(bytes []byte) []int {
 	h := sha256.New()
 	h.Write(bytes)
 	hashBytes := h.Sum(nil)
-	fmt.Println(hex.EncodeToString(hashBytes))
 	hashBits := BytesToBits(hashBytes)
 	bits = append(bits, hashBits[:checkLen]...)
 	return bits
@@ -83,13 +82,5 @@ func BIP39GetWords(bytes []byte) []string {
 
 // BIP39GetSeed s
 func BIP39GetSeed(words string, pwd string) []byte {
-	salt := "mnemonic" + pwd
-	bytes := []byte(words)
-	saltBytes := []byte(salt)
-	for i := 0; i < 2048; i++ {
-		h := sha512.New()
-		h.Write(bytes)
-		bytes = h.Sum(saltBytes)
-	}
-	return bytes
+	return pbkdf2.Key([]byte(words), []byte("mnemonic"+pwd), 2048, 64, sha512.New)
 }
