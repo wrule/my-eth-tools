@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/sha256"
+	"crypto/sha512"
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
@@ -78,4 +79,17 @@ func BIP39GetWords(bytes []byte) []string {
 		rst = append(rst, words[num])
 	}
 	return rst
+}
+
+// BIP39GetSeed s
+func BIP39GetSeed(words string, pwd string) []byte {
+	salt := "mnemonic" + pwd
+	bytes := []byte(words)
+	saltBytes := []byte(salt)
+	for i := 0; i < 2048; i++ {
+		h := sha512.New()
+		h.Write(bytes)
+		bytes = h.Sum(saltBytes)
+	}
+	return bytes
 }

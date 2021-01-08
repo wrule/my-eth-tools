@@ -17,6 +17,8 @@ func main() {
 	fmt.Println(hex.EncodeToString(bytes128))
 	words := BIP39GetWords(bytes128)
 	fmt.Println(words, len(words))
+	seed := BIP39GetSeed("army van defense carry jealous true garbage claim echo media make crunch", "")
+	fmt.Println(hex.EncodeToString(seed))
 	return
 	for {
 		priKeyHash := NewPriKey().Hex()
