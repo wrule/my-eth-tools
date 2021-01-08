@@ -1,6 +1,9 @@
 package main
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"fmt"
 	"io/ioutil"
 	"strings"
 )
@@ -32,4 +35,17 @@ func ReadWordListEn() []string {
 // ReadWordListZh 读取中文助记词词典列表
 func ReadWordListZh() []string {
 	return ReadWordList("bip39wordlist-zh.txt")
+}
+
+// BIP39AddCheckInfo s
+func BIP39AddCheckInfo(bytes []byte) []int {
+	bits := BytesToBits(bytes)
+	checkLen := len(bits) / 32
+	h := sha256.New()
+	h.Write(bytes)
+	hashBytes := h.Sum(nil)
+	fmt.Println(hex.EncodeToString(hashBytes))
+	hashBits := BytesToBits(hashBytes)
+	bits = append(bits, hashBits[:checkLen]...)
+	return bits
 }

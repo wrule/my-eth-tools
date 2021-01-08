@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/ecdsa"
-	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"strings"
@@ -11,26 +10,11 @@ import (
 )
 
 func main() {
-	bytes128 := GetRand128()
+	bytes128 := GetRand256()
 	fmt.Println(hex.EncodeToString(bytes128))
-	bits := BytesToBits(bytes128)
+	bits := BIP39AddCheckInfo(bytes128)
 	fmt.Println(bits)
-	fmt.Println(len(bits))
-	newBytes128 := BitsToBytes(bits)
-	fmt.Println(hex.EncodeToString(newBytes128))
-
-	// text := ReadWordListZh()
-	// fmt.Println(len(text))
-
-	h := sha256.New()
-	h.Write([]byte("hello world"))
-	fmt.Printf("%x\n", h.Sum(nil))
 	return
-
-	// byte256 := GetRand256()
-	// fmt.Println(hex.EncodeToString(byte256))
-
-	// return
 	for {
 		priKeyHash := NewPriKey().Hex()
 		// 创建私钥对象
